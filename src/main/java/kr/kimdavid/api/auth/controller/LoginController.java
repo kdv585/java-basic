@@ -1,4 +1,4 @@
-package kr.kimdavid.api.controller.auth;
+package kr.kimdavid.api.auth.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,17 +9,17 @@ import org.springframework.http.ResponseEntity;
 @Controller
 public class LoginController {
     
-    @GetMapping("/auth/login")
+    @GetMapping("/auth/login.html")
     public String login() {
-        return "auth/login";
+        return "auth/login.html";
     }
     
     @PostMapping("/login")
     public String processLogin(@RequestParam(name = "email") String email, 
                               @RequestParam(name = "password") String password) {
         
-        System.out.println("id = " + email);
-        System.out.println("password = " + password);
+        System.out.println("🎉🎉🎉id = " + email);
+        System.out.println("👏👏👏password = " + password);
         
         // 로그인 처리 후 리다이렉트 (예: 홈페이지로)
         return "redirect:/";

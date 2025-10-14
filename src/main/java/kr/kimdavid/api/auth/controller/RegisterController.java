@@ -1,4 +1,4 @@
-package kr.kimdavid.api.controller.auth;
+package kr.kimdavid.api.auth.controller;
 
 public class RegisterController {
     
