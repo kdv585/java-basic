@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueMall | 로그인</title>
+    <style>
+        :root {
+            --bg: #f6f8fb;
+            --panel: #ffffff;
+            --text: #0b1220;
+            --muted: #5b667a;
+            --primary: #0d6efd;
+            --primary-dark: #0a58ca;
+            --border: #e6e9ef;
+            --shadow: 0 10px 30px rgba(15, 35, 95, 0.08);
+        }
+        * { box-sizing: border-box; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif; }
+
+        /* Top bar to match mall */
+        .nav { display:flex; align-items:center; gap:20px; padding:12px 20px; background:#fff; border-bottom:1px solid var(--border); position:sticky; top:0; }
+        .brand { font-weight: 900; }
+        .nav a { text-decoration:none; color:inherit; font-weight:700; }
+        .spacer { flex: 1; }
+
+        /* Auth layout */
+        .wrapper { max-width: 980px; margin: 36px auto; padding: 0 20px; display:grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; }
+        .promo { background: linear-gradient(135deg, #0b63e6, #0d6efd 55%, #3a8bfd); color:#fff; border-radius:18px; padding:36px; box-shadow: var(--shadow); }
+        .promo h2 { margin:0 0 8px; font-size:28px; font-weight:900; }
+        .promo p { margin:0; opacity:.95; }
+
+        .panel { background: var(--panel); border:1px solid var(--border); border-radius:18px; box-shadow: var(--shadow); padding:28px; }
+        .title { margin:0 0 6px; font-size:24px; font-weight:900; }
+        .hint { margin:0 0 16px; color: var(--muted); font-size:14px; }
+        .field { display:grid; gap:8px; margin-bottom:14px; }
+        .label { font-size:13px; color: var(--muted); font-weight:700; }
+        .input { padding:12px 14px; border:1.5px solid var(--border); border-radius:12px; background:#fff; font-size:15px; }
+        .input:focus { outline:none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(13,110,253,.10); }
+        .btn { width:100%; padding:12px 14px; border:0; border-radius:12px; font-weight:800; color:#fff; background: var(--primary); box-shadow: 0 8px 18px rgba(13,110,253,.22); }
+        .btn:hover { background: var(--primary-dark); }
+        .links { display:flex; justify-content:space-between; margin-top:12px; font-size:13px; }
+        .links a { color: var(--primary); text-decoration:none; }
+        .links a:hover { text-decoration:underline; }
+
+        @media (max-width: 860px){ .wrapper{ grid-template-columns:1fr; } }
+    </style>
+    <link rel="preconnect" href="/">
+    <meta name="theme-color" content="#0d6efd">
+    <meta name="description" content="BlueMall 계정 로그인">
+    <link rel="icon" href="data:,">
+    <meta name="robots" content="noindex">
+</head>
+<body>
+    <nav class="nav">
+        <a class="brand" href="/">BlueMall</a>
+        <a href="/">홈</a>
+        <span class="spacer"></span>
+        <a href="/calculator/gob">로그인</a>
+    </nav>
+
+    <main class="wrapper" role="main">
+        <section class="promo" aria-label="혜택">
+            <h2>회원 전용 혜택</h2>
+            <p>오늘 가입하고 첫 구매 10% 쿠폰을 받아보세요.</p>
+        </section>
+        <section class="panel" aria-label="로그인 폼">
+            <h1 class="title">로그인</h1>
+            <p class="hint">BlueMall 계정으로 계속하기</p>
+
+            <form action="/login" method="post">
+                <div class="field">
+                    <label for="email" class="label">이메일</label>
+                    <input class="input" id="email" name="email" type="text" placeholder="이메일을 입력하세요">
+                </div>
+                <div class="field">
+                    <label for="password" class="label">비밀번호</label>
+                    <input class="input" id="password" name="password" type="password" placeholder="비밀번호를 입력하세요">
+                </div>
+                <button class="btn" type="submit">로그인</button>
+                <div class="links">
+                    <a href="#">비밀번호 찾기</a>
+                    <a href="#">회원가입</a>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

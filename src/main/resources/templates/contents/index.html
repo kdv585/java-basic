@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Hub | 홈</title>
+    <style>
+        :root {
+            --bg: #f6f8fb;
+            --panel: #ffffff;
+            --text: #0b1220;
+            --muted: #5b667a;
+            --primary: #0d6efd;
+            --primary-dark: #0a58ca;
+            --border: #e6e9ef;
+            --shadow: 0 10px 30px rgba(15, 35, 95, 0.08);
+        }
+        * { box-sizing: border-box; }
+        body { 
+            margin: 0; 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif; 
+        }
+
+        /* Navigation */
+        .nav { 
+            display: flex; 
+            align-items: center; 
+            gap: 20px; 
+            padding: 12px 20px; 
+            background: #fff; 
+            border-bottom: 1px solid var(--border); 
+            position: sticky; 
+            top: 0; 
+        }
+        .brand { 
+            font-weight: 900; 
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        .nav a { 
+            text-decoration: none; 
+            color: inherit; 
+            font-weight: 700; 
+        }
+        .spacer { flex: 1; }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-links li {
+            margin: 0;
+        }
+        .login-btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.22);
+        }
+        .login-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Main content */
+        .wrapper { 
+            max-width: 980px; 
+            margin: 36px auto; 
+            padding: 0 20px; 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 24px; 
+        }
+        .hero-section {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            padding: 36px;
+            text-align: center;
+        }
+        .hero-section h1 {
+            margin: 0 0 16px;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+        .hero-section h2 {
+            margin: 0 0 32px;
+            font-size: 1.2rem;
+            color: var(--muted);
+        }
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+        .calc-item {
+            background: linear-gradient(135deg, var(--primary), #3a8bfd);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 18px rgba(13, 110, 253, 0.22);
+            transition: transform 0.2s ease;
+        }
+        .calc-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(13, 110, 253, 0.3);
+        }
+
+        @media (max-width: 860px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a class="brand" href="/">Creative Hub</a>
+        <a href="/">홈</a>
+        <a href="/auth/register">회원가입</a>
+        <span class="spacer"></span>
+        <a href="/auth/login" class="login-btn">로그인</a>
+    </nav>
+
+    <main class="wrapper" role="main">
+        <section class="hero-section" aria-label="계산기 메뉴">
+            <h1>Creative Hub</h1>
+            <h2>계산기 서비스</h2>
+            <div class="calculator-grid">
+                <a href="/calculator/plus" class="calc-item">덧셈</a>
+                <a href="/calculator/minus" class="calc-item">뺄셈</a>
+                <a href="/calculator/gob" class="calc-item">곱셈</a>
+                <a href="/calculator/nanum" class="calc-item">나눗셈</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
