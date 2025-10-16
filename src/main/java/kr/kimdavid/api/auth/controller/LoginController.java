@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.kimdavid.api.auth.domain.LoginDTO;
 import kr.kimdavid.api.auth.service.LoginService;
+import kr.kimdavid.api.common.domain.Messenger;
 
 @Controller
 public class LoginController {
@@ -36,17 +37,18 @@ public class LoginController {
             loginDTO.setEmail(email);
             loginDTO.setPassword(password);
 
-            int loginResult = loginService.login(loginDTO);
-            System.out.println("로그인 결과 코드: " + loginResult);
+            Messenger messenger = loginService.login(loginDTO);
+            System.out.println("로그인 결과 코드: " + messenger.getCode());
+            System.out.println("로그인 결과 메시지: " + messenger.getMessage());
 
             // 로그인 결과에 따른 처리
-            if (loginResult == 0) {
+            if (messenger.getCode() == 0) {
                 System.out.println("로그인 성공!");
                 return "redirect:/";
-            } else if (loginResult == 2) {
+            } else if (messenger.getCode() == 2) {
                 System.out.println("비밀번호가 틀렸습니다.");
                 return "redirect:/login?error=password";
-            } else if (loginResult == 1) {
+            } else if (messenger.getCode() == 1) {
                 System.out.println("존재하지 않는 이메일입니다.");
                 return "redirect:/login?error=email";
             } else {
