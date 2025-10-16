@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>통합 계산기 - Creative Hub</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .calculator-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+        }
+
+        .calculator-section h2 {
+            margin-top: 0;
+            color: #495057;
+            text-align: center;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .operator {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .result {
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+            text-align: center;
+            padding: 10px;
+            background-color: #d4edda;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .calculate-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .calculate-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← 홈으로 돌아가기</a>
+
+        <h1>통합 계산기</h1>
+
+        <!-- 덧셈 계산기 -->
+        <div class="calculator-section">
+            <h2>덧셈 (+)</h2>
+            <form action="/calculator/calculate" method="get">
+                <input type="hidden" name="operation" value="add">
+                <div class="input-group">
+                    <input type="number" name="num1" placeholder="첫 번째 숫자" value="${num1}" required>
+                    <span class="operator">+</span>
+                    <input type="number" name="num2" placeholder="두 번째 숫자" value="${num2}" required>
+                </div>
+                <button type="submit" class="calculate-btn">계산하기</button>
+            </form>
+            <div class="result" th:if="${result != null and operation == 'add'}" th:text="${result}"></div>
+        </div>
+
+        <!-- 뺄셈 계산기 -->
+        <div class="calculator-section">
+            <h2>뺄셈 (-)</h2>
+            <form action="/calculator/calculate" method="get">
+                <input type="hidden" name="operation" value="sub">
+                <div class="input-group">
+                    <input type="number" name="num1" placeholder="첫 번째 숫자" value="${num1}" required>
+                    <span class="operator">-</span>
+                    <input type="number" name="num2" placeholder="두 번째 숫자" value="${num2}" required>
+                </div>
+                <button type="submit" class="calculate-btn">계산하기</button>
+            </form>
+            <div class="result" th:if="${result != null and operation == 'sub'}" th:text="${result}"></div>
+        </div>
+
+        <!-- 곱셈 계산기 -->
+        <div class="calculator-section">
+            <h2>곱셈 (×)</h2>
+            <form action="/calculator/calculate" method="get">
+                <input type="hidden" name="operation" value="mul">
+                <div class="input-group">
+                    <input type="number" name="num1" placeholder="첫 번째 숫자" value="${num1}" required>
+                    <span class="operator">×</span>
+                    <input type="number" name="num2" placeholder="두 번째 숫자" value="${num2}" required>
+                </div>
+                <button type="submit" class="calculate-btn">계산하기</button>
+            </form>
+            <div class="result" th:if="${result != null and operation == 'mul'}" th:text="${result}"></div>
+        </div>
+
+        <!-- 나눗셈 계산기 -->
+        <div class="calculator-section">
+            <h2>나눗셈 (÷)</h2>
+            <form action="/calculator/calculate" method="get">
+                <input type="hidden" name="operation" value="div">
+                <div class="input-group">
+                    <input type="number" name="num1" placeholder="첫 번째 숫자" value="${num1}" required>
+                    <span class="operator">÷</span>
+                    <input type="number" name="num2" placeholder="두 번째 숫자" value="${num2}" required>
+                </div>
+                <button type="submit" class="calculate-btn">계산하기</button>
+            </form>
+            <div class="result" th:if="${result != null and operation == 'div'}" th:text="${result}"></div>
+        </div>
+    </div>
+
+</body>
+
+</html>
