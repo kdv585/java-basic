@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -190,19 +190,29 @@
             <h1 class="title">로그인</h1>
             <p class="hint">BlueMall 계정으로 계속하기</p>
 
-            <form action="/login" method="get">
+            <form action="/auth/login" method="get">
                 <div class="field">
                     <label for="email" class="label">이메일</label>
                     <input class="input" id="email" name="email" type="text" placeholder="이메일을 입력하세요">
                 </div>
+
+
+
+
+                
                 <div class="field">
                     <label for="password" class="label">비밀번호</label>
-                    <input class="input" id="password" name="password" type="password" placeholder="비밀번호를 입력하세요">
+                    <input class="input" id="password" name="password" type="text" placeholder="비밀번호를 입력하세요">
                 </div>
                 <button class="btn" type="submit">로그인</button>
                 <div class="links">
                     <a href="#">비밀번호 찾기</a>
                     <a href="#">회원가입</a>
+                </div>
+
+                <div th:if="${messenger != null}">
+                    <p>code: <span th:text="${messenger.code}">CODE</span></p>
+                    <p>message: <span th:text="${messenger.message}">MESSAGE</span></p>
                 </div>
             </form>
         </section>

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import org.springframework.ui.Model;
 import kr.kimdavid.api.auth.domain.LoginDTO;
 import kr.kimdavid.api.auth.service.LoginService;
 import kr.kimdavid.api.common.domain.Messenger;
@@ -17,47 +18,23 @@ public class LoginController {
         this.loginService = loginService;
     }
 
-    @GetMapping("/login")
-    public String processLogin(@RequestParam(name = "email", required = false) String email,
-            @RequestParam(name = "password", required = false) String password) {
+    @GetMapping("/auth/login")
+    public String login(@RequestParam("email") String email, @RequestParam("password") String password, Model model) {
+        System.out.println("컨트롤러로 들어옴");
+        System.out.println("화면에서 컨트롤러로 전달된 이메일 : " + email);
+        System.out.println("화면에서 컨트롤러로 전달된 비밀번호 : " + password);
 
-        // 파라미터가 없으면 로그인 폼을 보여줌
-        if (email == null || password == null) {
-            System.out.println("로그인 폼 요청됨");
-            return "auth/login";
-        }
+        LoginDTO loginDTO = new LoginDTO();
+        loginDTO.setEmail(email);
+        loginDTO.setPassword(password);
 
-        // 파라미터가 있으면 로그인 처리
-        System.out.println("=== GET 로그인 요청 처리 ===");
-        System.out.println("이메일: " + email);
-        System.out.println("비밀번호: " + password);
+        Messenger messenger = loginService.login(loginDTO);
 
-        try {
-            LoginDTO loginDTO = new LoginDTO();
-            loginDTO.setEmail(email);
-            loginDTO.setPassword(password);
+        System.out.println("서비스에서 컨트롤러로 리턴한 코드 : " + messenger.getCode());
+        System.out.println("서비스에서 컨트롤러로 리턴한 메시지 : " + messenger.getMessage());
 
-            Messenger messenger = loginService.login(loginDTO);
-            System.out.println("로그인 결과 코드: " + messenger.getCode());
-            System.out.println("로그인 결과 메시지: " + messenger.getMessage());
+        model.addAttribute("messenger", messenger);
 
-            // 로그인 결과에 따른 처리
-            if (messenger.getCode() == 0) {
-                System.out.println("로그인 성공!");
-                return "redirect:/";
-            } else if (messenger.getCode() == 2) {
-                System.out.println("비밀번호가 틀렸습니다.");
-                return "redirect:/login?error=password";
-            } else if (messenger.getCode() == 1) {
-                System.out.println("존재하지 않는 이메일입니다.");
-                return "redirect:/login?error=email";
-            } else {
-                System.out.println("알 수 없는 오류가 발생했습니다.");
-                return "redirect:/login?error=unknown";
-            }
-        } catch (Exception e) {
-            System.out.println("로그인 처리 중 오류: " + e.getMessage());
-            return "redirect:/login?error=true";
-        }
+        return "auth/login";
     }
 }
