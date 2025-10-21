@@ -23,7 +23,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/register")
+    @GetMapping("auth/register")
     @ResponseBody
     public Messenger printFirstFivePassengers() {
         try {
