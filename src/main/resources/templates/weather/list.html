@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>날씨 데이터</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .message {
+            background: #e6fffa;
+            border: 1px solid #81e6d9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .message h3 {
+            margin: 0 0 10px 0;
+            color: #2d3748;
+        }
+
+        .message p {
+            margin: 0;
+            color: #4a5568;
+        }
+
+        .success {
+            background: #f0fff4;
+            border-color: #68d391;
+        }
+
+        .error {
+            background: #fed7d7;
+            border-color: #fc8181;
+        }
+
+        .refresh-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .data-section {
+            margin-top: 30px;
+        }
+
+        .data-section h3 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        .data-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .data-table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.85em;
+        }
+
+        .data-table tr:hover {
+            background-color: #f7fafc;
+        }
+
+        .data-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌤️ 날씨 데이터</h1>
+            <p>날씨 정보를 확인하세요</p>
+        </div>
+
+        <div class="content">
+            <button class="refresh-btn" onclick="location.reload()">🔄 새로고침</button>
+
+            <div class="message" th:classappend="${messenger.code == 0 ? 'success' : 'error'}">
+                <h3 th:text="${messenger.code == 0 ? '✅ 성공' : '❌ 오류'}">상태</h3>
+                <p th:text="${messenger.message}">메시지</p>
+            </div>
+
+            <div th:if="${messenger.code == 0}">
+                <p>터미널에서 날씨 데이터를 확인하세요!</p>
+                <p>총 처리된 데이터가 콘솔에 출력되었습니다.</p>
+
+                <!-- 날씨 데이터 테이블 -->
+                <div class="data-section">
+                    <h3>🌡️ 날씨 데이터</h3>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>일시</th>
+                                    <th>평균기온</th>
+                                    <th>최고기온</th>
+                                    <th>최고기온시각</th>
+                                    <th>최저기온</th>
+                                    <th>최저기온시각</th>
+                                    <th>일교차</th>
+                                    <th>강수량</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="weather : ${weatherList}">
+                                    <td th:text="${weather.date}"></td>
+                                    <td th:text="${weather.avgTemp} + '℃'"></td>
+                                    <td th:text="${weather.maxTemp} + '℃'"></td>
+                                    <td th:text="${weather.maxTempTime}"></td>
+                                    <td th:text="${weather.minTemp} + '℃'"></td>
+                                    <td th:text="${weather.minTempTime}"></td>
+                                    <td th:text="${weather.tempRange} + '℃'"></td>
+                                    <td th:text="${weather.precipitation} + 'mm'"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,5 +1,6 @@
 package kr.kimdavid.api.user.repository;
 
+import kr.kimdavid.api.common.domain.Messenger;
 import kr.kimdavid.api.user.domain.UserDTO;
 import org.springframework.stereotype.Component;
 import java.util.List;
@@ -7,21 +8,7 @@ import java.util.List;
 @Component
 public class Repository {
 
-    /**
-     * 승객 명단을 터미널에 출력하는 메서드
-     */
-    public void printPassengerList(List<UserDTO> passengers) {
-        System.out.println("========================================");
-        System.out.println("     타이타닉 승객 명단");
-        System.out.println("========================================");
-        System.out.println();
-
-        // 헤더 출력
-        System.out.printf("%-8s %-4s %-4s %-30s %-4s %-6s %-8s %-8s %-15s %-8s %-8s %-8s%n",
-                "승객ID", "생존", "등급", "이름", "성별", "나이", "형제자매/배우자", "부모/자녀", "티켓", "요금", "객실", "승선항구");
-
-        System.out.println(
-                "------------------------------------------------------------------------------------------------------------------------");
+    public Messenger printPassengerListMessage(List<UserDTO> passengers) {
 
         // 데이터 출력
         for (UserDTO passenger : passengers) {
@@ -29,14 +16,14 @@ public class Repository {
             String ticket = passenger.getTicket();
             String cabin = passenger.getCabin();
 
-            // 긴 문자열은 줄임 처리
-            if (name.length() > 30) {
+            // null 체크 후 긴 문자열은 줄임 처리
+            if (name != null && name.length() > 30) {
                 name = name.substring(0, 27) + "...";
             }
-            if (ticket.length() > 15) {
+            if (ticket != null && ticket.length() > 15) {
                 ticket = ticket.substring(0, 12) + "...";
             }
-            if (cabin.length() > 8) {
+            if (cabin != null && cabin.length() > 8) {
                 cabin = cabin.substring(0, 5) + "...";
             }
 
@@ -59,5 +46,10 @@ public class Repository {
         System.out.println("========================================");
         System.out.println("총 " + passengers.size() + "명의 승객 데이터");
         System.out.println("========================================");
+
+        Messenger messenger = new Messenger();
+        messenger.setCode(0);
+        messenger.setMessage("UserService에서 Repository 연결 완료: " + passengers.size() + "명의 데이터 처리");
+        return messenger;
     }
 }

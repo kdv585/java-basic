@@ -9,8 +9,8 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kimdavid.api.user.domain.UserDTO;
 import kr.kimdavid.api.user.service.UserService;
@@ -24,8 +24,9 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("auth/register")
-    @ResponseBody
-    public Messenger printFirstFivePassengers() {
+    public String printFirstFivePassengers(Model model) {
+        List<UserDTO> users = new ArrayList<>();
+
         try {
             // CSV 파일 경로
             String csvFilePath = "src/main/resources/static/csv/train.csv";
@@ -34,7 +35,6 @@ public class UserController {
             FileReader reader = new FileReader(csvFilePath);
             CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader());
 
-            List<UserDTO> users = new ArrayList<>();
             int count = 0;
 
             // 처음 5명의 데이터만 읽기
@@ -63,15 +63,14 @@ public class UserController {
             parser.close();
             reader.close();
 
-            // UserService를 통해 Repository 호출
-            Messenger messenger = userService.getTop5Passengers(users);
-            return messenger;
-
         } catch (IOException e) {
-            Messenger messenger = new Messenger();
-            messenger.setCode(1);
-            messenger.setMessage("CSV 파일을 읽는 중 오류가 발생했습니다: " + e.getMessage());
-            return messenger;
+            // 오류 발생 시 빈 리스트로 처리
+            users = new ArrayList<>();
         }
+
+        Messenger messenger = userService.getTop5Passengers(users);
+        model.addAttribute("messenger", messenger);
+        model.addAttribute("users", users);
+        return "user/list";
     }
 }
