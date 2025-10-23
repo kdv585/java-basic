@@ -1,12 +1,8 @@
-package kr.kimdavid.api.calculator.controller;
-
-import org.springframework.stereotype.Controller;
+package kr.kimdavid.api.calculator.service;
 
 import kr.kimdavid.api.calculator.domain.CalculatorDTO;
-import kr.kimdavid.api.calculator.service.CalculatorService;
 
-@Controller
-public class CalculatorController implements CalculatorService{
+public class CalculatorServiceImpl implements CalculatorService {
 
     @Override
     public int add(CalculatorDTO calculatorDTO) {
@@ -31,4 +27,5 @@ public class CalculatorController implements CalculatorService{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'divide'");
     }
-    }
+
+}
