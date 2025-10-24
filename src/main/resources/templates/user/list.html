@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>타이타닉 승객 데이터</title>
+    <title>상품 목록</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -67,21 +67,42 @@
             border-color: #fc8181;
         }
 
-        .refresh-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
             padding: 12px 24px;
+            border: none;
             border-radius: 6px;
             cursor: pointer;
             font-size: 16px;
             font-weight: 500;
-            margin-bottom: 20px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
             transition: transform 0.2s;
         }
 
-        .refresh-btn:hover {
+        .btn:hover {
             transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
         }
 
         .data-section {
@@ -128,6 +149,39 @@
         .data-table tr:nth-child(even) {
             background-color: #f8f9fa;
         }
+
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+            font-style: italic;
+        }
     </style>
 </head>
 
@@ -139,7 +193,10 @@
         </div>
 
         <div class="content">
-            <button class="refresh-btn" onclick="location.reload()">🔄 새로고침</button>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="location.reload()">🔄 새로고침</button>
+                <a href="/products" class="btn btn-success">➕ 상품 등록</a>
+            </div>
 
             <div class="message" th:classappend="${messenger.code == 0 ? 'success' : 'error'}">
                 <h3 th:text="${messenger.code == 0 ? '✅ 성공' : '❌ 오류'}">상태</h3>
@@ -185,6 +242,9 @@
                                     <td th:text="${user.fare}"></td>
                                     <td th:text="${user.cabin}"></td>
                                     <td th:text="${user.embarked}"></td>
+                                </tr>
+                                <tr th:if="${users == null or users.isEmpty()}">
+                                    <td colspan="12" class="no-data">승객 데이터가 없습니다.</td>
                                 </tr>
                             </tbody>
                         </table>
